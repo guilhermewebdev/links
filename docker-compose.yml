@@ -41,14 +41,12 @@ services:
             
 
     db:
-        image: postgres:alpine
+        image: postgres
         restart: always
         environment:
             POSTGRES_PASSWORD: password
             POSTGRES_USER: myuser
             POSTGRES_DB: database
-        volumes: 
-            - ./server/database/data:/var/lib/postgresql/data
         networks: 
             db:
                 ipv4_address: 172.25.20.20

@@ -1,7 +1,7 @@
 Django
 uvicorn
 argon2-cffi
-psycopg2
+psycopg2-binary
 django-filter
 django-axes
 django-guardian
