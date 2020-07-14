@@ -1,20 +1,6 @@
-FROM python
+FROM python:3
 
-ENV PYTHONUBUFFERED 1
-ENV PATH /home/api/.local/bin:$PATH
-
-RUN useradd -m api; pip install --upgrade pip;
-
-WORKDIR /home/api
-
-ADD requirements.txt .
-
-ADD main.sh .
-
-RUN chmod +x main.sh;
-
-USER api
-
-RUN pip install -r requirements.txt --user;
-
+WORKDIR /usr/src/app
+COPY requirements.txt ./
+RUN pip install -r requirements.txt
 COPY . .
