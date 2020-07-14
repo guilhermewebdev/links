@@ -1,0 +1,68 @@
+version: "3.7"
+
+services: 
+    api:
+        build: ./server/api
+        volumes: 
+            - ./server/api:/home/api
+        restart: always
+        environment: 
+            DB_PASSWORD: password
+            DB_USER: protetics
+            DB_NAME: database
+            DB_HOST: 172.25.20.20
+            DB_PORT: 5432
+        command: bash main.sh
+        depends_on: 
+            - db
+            - proxy
+        networks: 
+            db:
+                ipv4_address: 172.25.20.10
+            backend:
+                ipv4_address: 172.35.10.10
+
+
+    proxy:
+        image: nginx
+        volumes:
+            - ./server/proxy/dev/nginx/:/etc/nginx/
+            - ./server/api/static/:/usr/share/nginx/html/api/static/
+        restart: always
+        environment:
+            - NGINX_HOST=172.25.10.30
+            - NGINX_PORT=80
+        ports:
+            - 80:80
+            - 443:443
+        networks: 
+            backend:
+            ipv4_address: 172.35.10.40
+            
+
+    db:
+        image: postgres:alpine
+        restart: always
+        environment:
+            POSTGRES_PASSWORD: password
+            POSTGRES_USER: protetics
+            POSTGRES_DB: database
+        volumes: 
+            - ./server/database/data:/var/lib/postgresql/data
+        networks: 
+            db:
+                ipv4_address: 172.25.20.20
+            
+
+networks:     
+    backend:
+        driver: bridge
+        ipam:
+            config: 
+                - subnet: 172.35.10.1/16
+    db:
+        driver: bridge
+        ipam:
+            config: 
+                - subnet: 172.25.20.1/16
+            
