@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <html>
     <head>
-        {% block head %}
+        {% block head %}{% endblock %}
     </head>
     <body>
         <header>
-            {% block header %}
+            {% block header %}{% endblock %}
         </header>
         <main>
-            {% block body %}
+            {% block main %}{% endblock %}
         </main>
         <footer>
-            {% block footer %}
+            {% block footer %}{% endblock %}
         </footer>
     </body>
-    {% block javascript %}
-    {% block css %}
+    {% block javascript %}{% endblock %}
+    {% block css %}{% endblock %}
 </html>
