@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from django.views.generic.edit import FormView
 from . import forms
 from django.contrib.auth import authenticate
+from django.contrib.auth.mixins import LoginRequiredMixin
+
 
 class LoginView(FormView):
     template_name = 'login.html'
@@ -47,4 +49,16 @@ class RegistrationView(FormView):
             password=user.password,
             username=user.username,
         )
+        return super().form_valid(form)
+
+
+class SetUpStore(FormView, LoginRequiredMixin):
+    template_name = 'settings.html'
+    form_class = forms.SettingsForm
+    login_url = '/login/'
+    redirect_field_name = 'redirect_to'
+
+    def form_valid(self, form):
+        form.cleaned_data['owner'] = self.request.user
+        form.save()
         return super().form_valid(form)

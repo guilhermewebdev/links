@@ -21,4 +21,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('login/', core.LoginView.as_view()),
     path('registration/', core.RegistrationView.as_view()),
+    path('settings/', core.SetUpStore.as_view()),
 ]
