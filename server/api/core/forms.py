@@ -8,4 +8,7 @@ class LoginForm(forms.ModelForm):
 
     class Meta:
         model = usr()
-        fields = ('username','password','email')
+        fields = (
+            'email',
+            'password',
+        )
