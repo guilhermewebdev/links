@@ -1,1 +1,9 @@
 Django
+uvicorn
+argon2-cffi
+psycopg2
+django-filter
+django-axes
+django-guardian
+django-oauth-toolkit
+django-cors-middleware

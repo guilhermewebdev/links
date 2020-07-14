@@ -8,11 +8,11 @@ services:
         restart: always
         environment: 
             DB_PASSWORD: password
-            DB_USER: protetics
+            DB_USER: myuser
             DB_NAME: database
             DB_HOST: 172.25.20.20
             DB_PORT: 5432
-        command: bash main.sh
+        # command: bash main.sh
         depends_on: 
             - db
             - proxy
@@ -26,7 +26,7 @@ services:
     proxy:
         image: nginx
         volumes:
-            - ./server/proxy/dev/nginx/:/etc/nginx/
+            - ./server/proxy/dev/nginx/conf.d:/etc/nginx/conf.d
             - ./server/api/static/:/usr/share/nginx/html/api/static/
         restart: always
         environment:
@@ -37,7 +37,7 @@ services:
             - 443:443
         networks: 
             backend:
-            ipv4_address: 172.35.10.40
+                ipv4_address: 172.35.10.40
             
 
     db:
@@ -45,7 +45,7 @@ services:
         restart: always
         environment:
             POSTGRES_PASSWORD: password
-            POSTGRES_USER: protetics
+            POSTGRES_USER: myuser
             POSTGRES_DB: database
         volumes: 
             - ./server/database/data:/var/lib/postgresql/data
