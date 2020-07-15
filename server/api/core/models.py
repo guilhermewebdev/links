@@ -61,13 +61,17 @@ class Store(models.Model):
         blank=True,
         default='#FFFFFF'
     )
-    rounded = models.IntegerField()
+    rounded = models.IntegerField(
+        default=0,
+    )
     logo = models.ImageField(
         upload_to='media/images/bg',
         null=True,
         blank=True,
     )
-    item_size = models.IntegerField()
+    item_size = models.IntegerField(
+        default=12,
+    )
     font = models.CharField(
         max_length=30,
         default="Helvetica",

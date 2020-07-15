@@ -13,6 +13,13 @@ class RegisterForm(UserCreationForm):
 class LoginForm(AuthenticationForm):
     username = forms.CharField(label='Email / Username')
 
+class CreateStoreForm(forms.ModelForm):
+    class Meta:
+        model = Store
+        fields = (
+            'title',
+            'slug',
+        )
 
 class SettingsForm(forms.ModelForm):
     class Meta:
