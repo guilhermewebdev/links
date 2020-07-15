@@ -57,8 +57,10 @@ class SetUpStore(FormView, LoginRequiredMixin):
     form_class = forms.SettingsForm
     login_url = '/login/'
     redirect_field_name = 'redirect_to'
+    success_url = '/settings/'
 
     def form_valid(self, form):
         form.cleaned_data['owner'] = self.request.user
         form.save()
         return super().form_valid(form)
+

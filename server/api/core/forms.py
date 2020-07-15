@@ -1,7 +1,8 @@
 from django import forms
 from django.contrib.auth import get_user_model 
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from .models import Store
+from .models import Store, Item
+from django.forms.models import inlineformset_factory
 
 class RegisterForm(UserCreationForm):
     class Meta:
@@ -29,3 +30,20 @@ class SettingsForm(forms.ModelForm):
             'pixel',
             'analytics',
         )
+
+ItemsForm = inlineformset_factory(
+    Store,
+    Item,
+    form=SettingsForm,
+    extra=1,
+    can_order=True,
+    fields=(
+        'title',
+        'description',
+        'price',
+        'link',
+        'image',
+        'reference',
+        'index',
+    )
+)    

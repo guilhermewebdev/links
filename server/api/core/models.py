@@ -25,6 +25,7 @@ class Item(models.Model):
     reference = models.SlugField(
         max_length=50,
     )
+    index = models.IntegerField()
 
     def __str__(self):
         return self.title
@@ -34,8 +35,11 @@ class Item(models.Model):
         return f'/{self.store.get_url()}/{self.reference}'
 
     class Meta:
-        unique_together = ('reference', 'store')
-
+        unique_together = (
+            ('reference', 'store'),
+            ('index', 'store'),
+        )
+        ordering = ['index']
 
 class Store(models.Model):
     owner = models.ForeignKey(
