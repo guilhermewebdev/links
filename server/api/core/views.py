@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.views.generic.edit import FormView, CreateView, UpdateView
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView
 from . import forms, models
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -96,21 +96,21 @@ class SettingsView(
         return super().form_valid(form)
 
 class SetUpStore(
-    FormView,
     LoginRequiredMixin,
     UpdateView,
+    DetailView,
 ):
     template_name = 'store_settings.html'
     form_class = forms.SettingsForm
     login_url = '/login/'
     redirect_field_name = 'next'
     model = models.Store
+    context_object_name = 'store'
 
-    def form_valid(self, form):
-        store = form.save(commit=False)
-        store.owner = self.request.user
-        store.save()
-        return super().form_valid(form)
+    def get_success_url(self):
+        if 'kwargs' in dir(self):
+            return f'/settings/{self.kwargs.get("pk")}/'
+        else: return '/settings/'
 
 class ItemsView(FormView, LoginRequiredMixin):
     template_name = 'items.html'

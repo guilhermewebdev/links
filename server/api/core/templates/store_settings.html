@@ -1,9 +1,9 @@
 {% extends 'base.html' %}
 
 {% block main %}
-    <form method="POST" action="/settings/">
+    <form method="POST" action="{{ store.admin_url }}">
         {% csrf_token %}
         {{ form }}
-        <button type="submit">Salvar</button>
+        <button type="submit">Save</button>
     </form>
 {% endblock %}

@@ -9,7 +9,9 @@
     <ul>
         {% for store in stores %}
             <li>
-                {{ store.title }}
+                <a href="{{ store.admin_url }}">
+                    {{ store.title }}
+                </a>
             </li>    
         {% endfor %}
     </ul>

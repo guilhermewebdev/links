@@ -101,5 +101,9 @@ class Store(models.Model):
         return self.title
 
     @property
-    def url():
+    def admin_url(self):
+        return f'/settings/{self.pk}/'
+
+    @property
+    def url(self):
         return f'/{self.slug}'
