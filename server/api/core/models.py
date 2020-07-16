@@ -19,7 +19,7 @@ class Item(models.Model):
         max_length=300
     )
     image = models.ImageField(
-        upload_to='media/images/items',
+        upload_to='media/images/items/',
         null=True,
         blank=True,
     )
@@ -56,7 +56,7 @@ class Store(models.Model):
         related_name='stores',
     )
     background_image = models.ImageField(
-        upload_to='media/images/bg',
+        upload_to='media/images/bg/',
         null=True,
         blank=True,
     )
@@ -74,7 +74,7 @@ class Store(models.Model):
         default=0,
     )
     logo = models.ImageField(
-        upload_to='media/images/bg',
+        upload_to='media/images/logos/',
         null=True,
         blank=True,
     )

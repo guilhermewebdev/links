@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block main %}
-    <form method="POST" action="{{ store.admin_url }}">
+    <form method="POST" enctype="multipart/form-data" action="{{ store.admin_url }}">
         {% csrf_token %}
         {{ form.as_p }}
         <h2>New Item</h2>

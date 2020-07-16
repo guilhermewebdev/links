@@ -125,15 +125,17 @@ class SetUpStore(
         context = self.get_context_data()
         item = context["item_form"]
         self.object = form.save()
-        item.instance = self.object
-        item.save()
+        if item.is_valid():
+            item.clean()
+            item.instance = self.object
+            item.save()
         return super().form_valid(form)
 
 class StoreView(DetailView):
     template_name = 'store.html'
     model = models.Store
     context_object_name = 'store'
-    
+
     def get_object(self, *args, **kwargs):
         return self.model.objects.get(
             slug=self.kwargs.get('store')

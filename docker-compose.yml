@@ -28,6 +28,7 @@ services:
         volumes:
             - ./server/proxy/dev/nginx/conf.d:/etc/nginx/conf.d
             - ./server/api/static/:/usr/share/nginx/html/api/static/
+            - ./server/api/media/:/usr/share/nginx/html/api/media/
         restart: always
         environment:
             - NGINX_HOST=172.25.10.30
