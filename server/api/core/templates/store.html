@@ -24,6 +24,36 @@
 </div>
 {% endblock %}
 
+{% block main %}
+<div class="container h-100 py-2 overflow-auto">
+    <div class="row px-3 justify-content-md-center">
+        {% for item in store.items.all.iterator %}
+        <a
+            href="{{ item.link }}"
+            class="card my-2
+            {% if item.size %}
+            col-{{ item.size }} sm-{{ item.size }} md-{{ item.size }} lg-{{ item.size }} xl-{{ item.size }}"
+            {% else %}
+            col-{{ store.item_size }} sm-{{ store.item_size }} md-{{ store.item_size }} lg-{{ store.item_size }} xl-{{ store.item_size }}"
+            {% endif %}
+        >
+            {% if item.image %}
+            <img src="/{{ item.image }}" class="card-img-top" alt="{{ item.title }}">
+            {% endif %}
+            <div class="card-body">
+                {% if item.title %}
+                <h5 class="card-title mb-0">{{ item.title }}</h5>
+                {% endif %}
+                {% if item.description %}
+                <p class="card-text mt-1">{{ item.description }}</p>
+                {% endif %}
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
+
 {% block head %}
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -37,4 +67,19 @@
 {% endblock %}
 
 {% block css %}
+<style>
+    body {
+        background-size: cover;
+        background-position: center center;
+        height: 100vh;
+        width: 100vw;
+        background-repeat: no-repeat;
+        {% if store.background_image %}
+        background-image: url("/{{ store.background_image }}");
+        {% endif %}
+        {% if store.background_color %}
+        background-color: {{ store.background_color }};
+        {% endif %}
+    }
+</style>
 {% endblock %}

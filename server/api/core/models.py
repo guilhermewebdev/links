@@ -23,6 +23,10 @@ class Item(models.Model):
         null=True,
         blank=True,
     )
+    size = models.IntegerField(
+        null=True,
+        blank=True,
+    )
     store = models.ForeignKey(
         'Store',
         on_delete=models.CASCADE,
