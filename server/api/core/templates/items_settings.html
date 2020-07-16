@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block main %}
+    <form method="POST" action="{{ request.path }}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <h2>New Item</h2>
+        {{ items.as_p }}
+        <button type="submit">Save</button>
+    </form>
+
+{% endblock %}

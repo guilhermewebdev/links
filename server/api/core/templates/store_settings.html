@@ -3,7 +3,14 @@
 {% block main %}
     <form method="POST" action="{{ store.admin_url }}">
         {% csrf_token %}
-        {{ form }}
+        {{ form.as_p }}
+        <h2>New Item</h2>
+        {{ item_form.as_p }}
         <button type="submit">Save</button>
     </form>
+    <ul>
+        {% for item in store.items.all.iterator %}
+        <li>{{ item.title }}</li>
+        {% endfor %}
+    </ul>
 {% endblock %}

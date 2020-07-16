@@ -11,19 +11,27 @@ class Item(models.Model):
         null=True,
         blank=True,
     )
-    price = models.IntegerField()
+    price = models.IntegerField(
+        null=True,
+        blank=True,
+    )
     link = models.URLField(
         max_length=300
     )
     image = models.ImageField(
-        upload_to='media/images/items'
+        upload_to='media/images/items',
+        null=True,
+        blank=True,
     )
     store = models.ForeignKey(
         'Store',
         on_delete=models.CASCADE,
+        related_name='items',
     )
     reference = models.SlugField(
         max_length=50,
+        null=True,
+        blank=True,
     )
     index = models.IntegerField()
 
@@ -31,7 +39,7 @@ class Item(models.Model):
         return self.title
 
     @property
-    def url(self):
+    def admin_url(self):
         return f'/{self.store.get_url()}/{self.reference}'
 
     class Meta:
@@ -45,6 +53,7 @@ class Store(models.Model):
     owner = models.ForeignKey(
         get_user_model(),
         on_delete=models.CASCADE,
+        related_name='stores',
     )
     background_image = models.ImageField(
         upload_to='media/images/bg',
@@ -99,6 +108,10 @@ class Store(models.Model):
 
     def __str__(self):
         return self.title
+
+    @property
+    def items_admin_url(self):
+        return f'/settings/{self.pk}/items/'
 
     @property
     def admin_url(self):

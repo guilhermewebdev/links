@@ -86,6 +86,7 @@ class SettingsView(
         ).all()
         context = super(SettingsView, self).get_context_data(*args, **kwargs)
         context['stores'] = self.object_list
+        
         return context
 
     def form_valid(self, form):
@@ -107,17 +108,24 @@ class SetUpStore(
     model = models.Store
     context_object_name = 'store'
 
+    def get_context_data(self, *args, **kwargs):
+        data = super().get_context_data(**kwargs)
+        if self.request.POST:
+            data["item_form"] = forms.ItemsForm(self.request.POST)
+        else:
+            data["item_form"] = forms.ItemsForm()
+        return data
+
     def get_success_url(self):
-        if 'kwargs' in dir(self):
+        if self.kwargs != {}:
             return f'/settings/{self.kwargs.get("pk")}/'
         else: return '/settings/'
 
-class ItemsView(FormView, LoginRequiredMixin):
-    template_name = 'items.html'
-    form_class = forms.ItemsForm
-    login_url = '/login/'
-    redirect_field_name = 'next'
-    success_url = '/settings/'
-
     def form_valid(self, form):
-        pass
+        context = self.get_context_data()
+        item = context["item_form"]
+        self.object = form.save()
+        item.instance = self.object
+        item.save()
+        return super().form_valid(form)
+        

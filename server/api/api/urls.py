@@ -23,4 +23,5 @@ urlpatterns = [
     path('registration/', core.RegistrationView.as_view()),
     path('settings/', core.SettingsView.as_view()),
     path('settings/<int:pk>/', core.SetUpStore.as_view()),
+    path()
 ]
