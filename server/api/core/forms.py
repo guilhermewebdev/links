@@ -27,11 +27,7 @@ class SettingsForm(forms.ModelForm):
         fields = (
             'background_image',
             'slug',
-            'background_color',
-            'rounded',
             'logo',
-            'item_size',
-            'font',
             'title',
             'description',
             'pixel',

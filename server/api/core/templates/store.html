@@ -1,13 +1,24 @@
 {% extends 'base.html' %}
 {% block header %}
-<div class="container-fluid border">
+<div class="container-fluid border-bottom">
     <div class="row align-items-center">
         <div class="col-9">
             {% if store.title %}
-            <h1 class="mt-1">{{ store.title }}</h1>
+            <h1 class="mt-1"
+                style="
+                    font-family: {{ store.font_title }}, Arial, Helvetica, sans-serif;
+                    color: {{ store.title_color }};
+                "
+            >{{ store.title }}</h1>
             {% endif %}
             {% if store.description %}
-            <p class="mb-2">{{ store.description }}</p>
+            <p
+                class="mb-2"
+                style="
+                    font-family: {{ store.font_description }}, Arial, Helvetica, sans-serif;
+                    color: {{ store.description_color }};
+                "
+            >{{ store.description }}</p>
             {% endif %}
         </div>
         {% if store.logo %}
@@ -26,7 +37,7 @@
 
 {% block main %}
 <div class="container h-100 py-2 overflow-auto">
-    <div class="row px-3 justify-content-md-center">
+    <div class="row px-3 justify-content-around">
         {% for item in store.items.all.iterator %}
         <a
             href="{{ item.link }}"

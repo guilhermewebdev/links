@@ -19,7 +19,7 @@ class Item(models.Model):
         max_length=300
     )
     image = models.ImageField(
-        upload_to='media/images/items/',
+        upload_to='images/items/',
         null=True,
         blank=True,
     )
@@ -38,6 +38,13 @@ class Item(models.Model):
         blank=True,
     )
     index = models.IntegerField()
+    theme = models.ForeignKey(
+        'ItemTheme',
+        on_delete=models.DO_NOTHING,
+        related_name='items',
+        null=True,
+        blank=True,
+    )
 
     def __str__(self):
         return self.title
@@ -60,7 +67,7 @@ class Store(models.Model):
         related_name='stores',
     )
     background_image = models.ImageField(
-        upload_to='media/images/bg/',
+        upload_to='images/bg/',
         null=True,
         blank=True,
     )
@@ -68,26 +75,10 @@ class Store(models.Model):
         max_length=150,
         unique=True,
     )
-    background_color = models.CharField(
-        max_length=15,
-        null=True,
-        blank=True,
-        default='#FFFFFF'
-    )
-    rounded = models.IntegerField(
-        default=0,
-    )
     logo = models.ImageField(
-        upload_to='media/images/logos/',
+        upload_to='images/logos/',
         null=True,
         blank=True,
-    )
-    item_size = models.IntegerField(
-        default=12,
-    )
-    font = models.CharField(
-        max_length=30,
-        default="Helvetica",
     )
     title = models.CharField(
         max_length=100,
@@ -109,6 +100,13 @@ class Store(models.Model):
         null=True,
         blank=True,
     )
+    theme = models.ForeignKey(
+        'Theme',
+        on_delete=models.DO_NOTHING,
+        related_name='stores',
+        null=True,
+        blank=True,
+    )
 
     def __str__(self):
         return self.title
@@ -124,3 +122,101 @@ class Store(models.Model):
     @property
     def url(self):
         return f'/{self.slug}'
+
+
+class AbstractTheme(models.Model):
+    
+    font_description = models.CharField(
+        max_length=30,
+        default="Helvetica",
+    )
+    font_title = models.CharField(
+        max_length=30,
+        default="Helvetica",
+    )
+    title_color = models.CharField(
+        max_length=15,
+        default='#000'
+    )
+    description_color = models.CharField(
+        max_length=15,
+        default='#000'
+    )
+    background_color = models.CharField(
+        max_length=15,
+        default='transparent'
+    )
+
+    class Meta:
+        abstract = True
+
+class ItemTheme(AbstractTheme):
+    owner = models.ForeignKey(
+        get_user_model(),
+        on_delete=models.CASCADE,
+        related_name='item_themes',
+    ) 
+    rounded = models.IntegerField(
+        default=0,
+    )
+    item_size = models.IntegerField(
+        default=12,
+    )
+    image_position = models.CharField(
+        max_length=15,
+        default='top',
+    )
+    padding = models.IntegerField(
+        default=15,
+    )
+    border_color = models.CharField(
+        max_length=15,
+        default='#FFFFFF'
+    )
+    border_size = models.IntegerField(
+        default=1,
+    )
+    border_style = models.CharField(
+        max_length=20,
+        default='solid'
+    )
+
+    class Meta:
+        abstract = False
+
+
+class StoreTheme(AbstractTheme):
+    owner = models.ForeignKey(
+        get_user_model(),
+        on_delete=models.CASCADE,
+        related_name='store_themes',
+    ) 
+    background_header = models.CharField(
+        max_length=15,
+        default='transparent'
+    )
+    logo_position = models.CharField(
+        max_length=15,
+        default='right',
+    )
+
+    class Meta:
+        abstract = False
+
+
+class Theme(models.Model):
+    owner = models.ForeignKey(
+        get_user_model(),
+        on_delete=models.CASCADE,
+        related_name='themes',
+    )
+    store = models.ForeignKey(
+        StoreTheme,
+        on_delete=models.DO_NOTHING,
+        related_name='themes',
+    )
+    items = models.ForeignKey(
+        ItemTheme,
+        on_delete=models.DO_NOTHING,
+        related_name='themes',
+    )
