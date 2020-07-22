@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth import get_user_model 
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from .models import Store, Item
+from .models import Store, Item, Theme
 from django.forms.models import inlineformset_factory
 
 class RegisterForm(UserCreationForm):
@@ -34,24 +34,24 @@ class SettingsForm(forms.ModelForm):
             'theme',
         )
 
-ThemeForm = inlineformset_factory(
-    Store,
-    StoreTheme,
-    form=SettingsForm,
-    extra=1,
-    fields=(
-        'rounded',
-        'item_size',
-        'image_position',
-        'padding',
-        'border_color',
-        'border_size',
-        'border_style',
-        'background_header',
-        'logo_position',
-        'background_image',
-    )
-)
+# ThemeForm = inlineformset_factory(
+#     Theme,
+#     Store,
+#     form=SettingsForm,
+#     extra=1,
+#     fields=(
+#         'rounded',
+#         'item_size',
+#         'image_position',
+#         'padding',
+#         'border_color',
+#         'border_size',
+#         'border_style',
+#         'background_header',
+#         'logo_position',
+#         'background_image',
+#     )
+# )
 
 ItemsForm = inlineformset_factory(
     Store,

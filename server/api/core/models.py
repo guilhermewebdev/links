@@ -175,17 +175,24 @@ class ItemTheme(AbstractTheme):
         max_length=20,
         default='solid'
     )
+    theme = models.OneToOneField(
+        'Theme',
+        on_delete=models.DO_NOTHING,
+        null=True,
+        blank=True,
+        related_name='items',
+    )
 
     class Meta:
         abstract = False
 
 
-class StoreTheme(AbstractTheme):
+class Theme(AbstractTheme):
     owner = models.ForeignKey(
         get_user_model(),
         on_delete=models.CASCADE,
-        related_name='store_themes',
-    ) 
+        related_name='themes',
+    )
     background_header = models.CharField(
         max_length=15,
         default='transparent'
@@ -199,23 +206,7 @@ class StoreTheme(AbstractTheme):
         null=True,
         blank=True,
     )
+    
+    
     class Meta:
         abstract = False
-
-
-class Theme(models.Model):
-    owner = models.ForeignKey(
-        get_user_model(),
-        on_delete=models.CASCADE,
-        related_name='themes',
-    )
-    store = models.ForeignKey(
-        StoreTheme,
-        on_delete=models.DO_NOTHING,
-        related_name='themes',
-    )
-    items = models.ForeignKey(
-        ItemTheme,
-        on_delete=models.DO_NOTHING,
-        related_name='themes',
-    )
