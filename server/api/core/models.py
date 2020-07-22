@@ -23,10 +23,7 @@ class Item(models.Model):
         null=True,
         blank=True,
     )
-    size = models.IntegerField(
-        null=True,
-        blank=True,
-    )
+    
     store = models.ForeignKey(
         'Store',
         on_delete=models.CASCADE,
@@ -154,7 +151,7 @@ class ItemTheme(AbstractTheme):
     rounded = models.IntegerField(
         default=0,
     )
-    item_size = models.IntegerField(
+    size = models.IntegerField(
         default=12,
     )
     image_position = models.CharField(
@@ -192,6 +189,9 @@ class Theme(AbstractTheme):
         get_user_model(),
         on_delete=models.CASCADE,
         related_name='themes',
+    )
+    size = models.IntegerField(
+        default=12,
     )
     background_header = models.CharField(
         max_length=15,
