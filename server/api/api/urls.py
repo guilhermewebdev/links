@@ -19,9 +19,5 @@ from core import views as core
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('login/', core.LoginView.as_view()),
-    path('registration/', core.RegistrationView.as_view()),
-    path('settings/', core.SettingsView.as_view()),
-    path('settings/<int:pk>/', core.SetUpStore.as_view()),
     path('<slug:store>/', core.StoreView.as_view())
 ]
