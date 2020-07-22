@@ -4,21 +4,10 @@
     <div class="row align-items-center">
         <div class="col-9">
             {% if store.title %}
-            <h1 class="mt-1"
-                style="
-                    font-family: {{ store.font_title }}, Arial, Helvetica, sans-serif;
-                    color: {{ store.title_color }};
-                "
-            >{{ store.title }}</h1>
+            <h1 class="mt-1 title">{{ store.title }}</h1>
             {% endif %}
             {% if store.description %}
-            <p
-                class="mb-2"
-                style="
-                    font-family: {{ store.font_description }}, Arial, Helvetica, sans-serif;
-                    color: {{ store.description_color }};
-                "
-            >{{ store.description }}</p>
+            <p class="mb-2 description">{{ store.description }}</p>
             {% endif %}
         </div>
         {% if store.logo %}
@@ -43,9 +32,17 @@
             href="{{ item.link }}"
             class="card my-2
             {% if item.size %}
-            col-{{ item.size }} sm-{{ item.size }} md-{{ item.size }} lg-{{ item.size }} xl-{{ item.size }}"
+                col-{{ item.size }}
+                sm-{{ item.size }}
+                md-{{ item.size }}
+                lg-{{ item.size }}
+                xl-{{ item.size }}"
             {% else %}
-            col-{{ store.item_size }} sm-{{ store.item_size }} md-{{ store.item_size }} lg-{{ store.item_size }} xl-{{ store.item_size }}"
+                col-{{ store.theme.item_size }}
+                sm-{{ store.theme.item_size }}
+                md-{{ store.theme.item_size }}
+                lg-{{ store.theme.item_size }}
+                xl-{{ store.theme.item_size }}"
             {% endif %}
         >
             {% if item.image %}
@@ -68,28 +65,70 @@
 {% block head %}
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+<meta name="description" content="{{ store.description }}">
+<title>{{ store.title }}</title>
 {% endblock %}
 
 {% block javascript %}
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+<script async src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script async src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script async src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+{% if store.pixel %}
+<!-- Facebook Pixel Code -->
+<script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '{{ store.pixel }}');
+    fbq('track', 'PageView');
+  </script>
+  <noscript>
+    <img height="1" width="1" style="display:none" 
+         src="https://www.facebook.com/tr?id={{ store.pixel }}&ev=PageView&noscript=1"/>
+  </noscript>
+  <!-- End Facebook Pixel Code -->
+{% endif %}
+{% if store.analytics %}
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id={{ store.analytics }}"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', '{{ store.analytics }}');
+</script>
+
+{% endif %}
 {% endblock %}
 
 {% block css %}
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 <style>
+    .title {
+        font-family: {{ store.theme.font_title }}, Arial, Helvetica, sans-serif;
+        color: {{ store.title_color }};
+    }
+    .description {
+        font-family: {{ store.theme.font_description }}, Arial, Helvetica, sans-serif;
+        color: {{ store.description_color }};
+    }
     body {
         background-size: cover;
         background-position: center center;
         height: 100vh;
         width: 100vw;
         background-repeat: no-repeat;
-        {% if store.background_image %}
-        background-image: url("/{{ store.background_image }}");
+        {% if store.theme.background_image %}
+        background-image: url("/{{ store.theme.background_image }}");
         {% endif %}
-        {% if store.background_color %}
-        background-color: {{ store.background_color }};
+        {% if store.theme.background_color %}
+        background-color: {{ store.theme.background_color }};
         {% endif %}
     }
 </style>
