@@ -66,11 +66,6 @@ class Store(models.Model):
         on_delete=models.CASCADE,
         related_name='stores',
     )
-    background_image = models.ImageField(
-        upload_to='images/bg/',
-        null=True,
-        blank=True,
-    )
     slug = models.SlugField(
         max_length=150,
         unique=True,
@@ -199,7 +194,11 @@ class StoreTheme(AbstractTheme):
         max_length=15,
         default='right',
     )
-
+    background_image = models.ImageField(
+        upload_to='images/bg/',
+        null=True,
+        blank=True,
+    )
     class Meta:
         abstract = False
 
