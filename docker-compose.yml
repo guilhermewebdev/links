@@ -12,7 +12,7 @@ services:
             DB_NAME: database
             DB_HOST: 172.25.20.20
             DB_PORT: 5432
-        command: ./manage.py runserver 0.0.0.0:8000
+        command: pypy3 manage.py runserver 0.0.0.0:8000
         depends_on: 
             - db
             - proxy

@@ -12,13 +12,13 @@ class RegistrationView(FormView):
 
     def get(self, *args, **kwargs):
         if self.request.user.is_authenticated:
-            return redirect(self.request.GET.get('next', '/'))
+            return redirect(self.get_success_url())
         return super().get(*args, **kwargs)
     
     def get_success_url(self):
         if self.request.user.is_authenticated:
-            return self.request.GET.get('next', '/')
-        return '/registration/'
+            return self.request.GET.get('next', '/admin/')
+        return '/admin/register/'
 
     def form_valid(self, form):
         user = form.save()

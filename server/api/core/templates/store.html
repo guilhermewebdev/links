@@ -4,7 +4,7 @@
 <div class="container-fluid pt-4">
     <div class="row justify-content-center">
         {% if store.logo %}
-        <div class="col-4">
+        <div class="col-5">
             <img
                 class="img-fluid logo"
                 src="/{{ store.logo }}"
@@ -19,7 +19,7 @@
     <div class="row pt-3 justify-content-center">
         <div class="col-12 ">
             {% if store.title %}
-            <h1 class="mt-1 h2 title">{{ store.title }}</h1>
+            <h1 class="mt-1 title">{{ store.title }}</h1>
             {% endif %}
             {% if store.description %}
             <p class="mb-2 description">{{ store.description }}</p>
@@ -173,7 +173,7 @@
     .item-card {
         padding: {{ store.theme.items.padding }};
         border: {{ store.theme.items.border_size }}px {{ store.theme.items.border_style }} {{ store.theme.items.border_color }};
-        border-radius: {{ store.theme.items.rounded }}px;
+        border-radius: {{ store.theme.items.rounded }}%;
         background-color: {{ store.theme.items.background_color }};
     }
     .title {
@@ -191,7 +191,7 @@
         color: {{ store.theme.description_color }};
     }
     .logo {
-        border-radius: {{ store.theme.logo_rounded }}px;
+        border-radius: {{ store.theme.logo_rounded }}%;
     }
     body {
         background-size: cover;
