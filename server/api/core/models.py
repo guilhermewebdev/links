@@ -197,6 +197,9 @@ class Theme(AbstractTheme):
         max_length=15,
         default='transparent'
     )
+    logo_rounded = models.IntegerField(
+        default=0,
+    )
     logo_position = models.CharField(
         max_length=15,
         default='right',

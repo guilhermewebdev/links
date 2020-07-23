@@ -1,26 +1,30 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block header %}
-<div class="container-fluid border-bottom">
-    <div class="row align-items-center">
-        <div class="col-9">
-            {% if store.title %}
-            <h1 class="mt-1 title">{{ store.title }}</h1>
-            {% endif %}
-            {% if store.description %}
-            <p class="mb-2 description">{{ store.description }}</p>
-            {% endif %}
-        </div>
+<div class="container-fluid pt-4">
+    <div class="row justify-content-center">
         {% if store.logo %}
-        <div class="col-3">
+        <div class="col-4">
             <img
-                class="img-fluid"
+                class="img-fluid logo"
                 src="/{{ store.logo }}"
                 alt="{{ store.title }}"
+                height="100"
                 longdesc="{{ store.description }}"
                 loading="lazy"
             >
         </div>
         {% endif %}
+    </div>
+    <div class="row pt-3 justify-content-center">
+        <div class="col-12 ">
+            {% if store.title %}
+            <h1 class="mt-1 h2 title">{{ store.title }}</h1>
+            {% endif %}
+            {% if store.description %}
+            <p class="mb-2 description">{{ store.description }}</p>
+            {% endif %}
+        </div>
     </div>
 </div>
 {% endblock %}
@@ -80,7 +84,7 @@
                 {% endif %}
                 {% if item.description %}
                 <p class="card-text mt-1 item-description"
-                {% if item.theme %}
+                {% if item.theme %}Comic
                 style="
                     color: {{ item.theme.description_color }};
                     font-family: {{ item.theme.font_description }}, Arial, Helvetica, sans-serif
@@ -153,10 +157,16 @@
 {% endif %}
 <style>
     .item-title {
+        display: flex;
+        justify-content: center;
+        align-items: center;
         color: {{ store.theme.items.title_color }};
         font-family: {{ store.theme.items.font_title }}, Arial, Helvetica, sans-serif;
     }
     .item-description {
+        display: flex;
+        justify-content: center;
+        align-items: center;
         color: {{ store.theme.items.description_color }};
         font-family: {{ store.theme.items.font_description }}, Arial, Helvetica, sans-serif;
     }
@@ -167,12 +177,21 @@
         background-color: {{ store.theme.items.background_color }};
     }
     .title {
+        display: flex;
+        justify-content: center;
+        align-items: center;
         font-family: {{ store.theme.font_title }}, Arial, Helvetica, sans-serif;
         color: {{ store.theme.title_color }};
     }
     .description {
+        display: flex;
+        justify-content: center;
+        align-items: center;
         font-family: {{ store.theme.font_description }}, Arial, Helvetica, sans-serif;
         color: {{ store.theme.description_color }};
+    }
+    .logo {
+        border-radius: {{ store.theme.logo_rounded }}px;
     }
     body {
         background-size: cover;
@@ -181,7 +200,7 @@
         width: 100vw;
         background-repeat: no-repeat;
         {% if store.theme.background_image %}
-        background-image: url("/{{ store.theme.background_image }}");
+        background-image: url("/media/{{ store.theme.background_image }}");
         {% endif %}
         {% if store.theme.background_color %}
         background-color: {{ store.theme.background_color }};
