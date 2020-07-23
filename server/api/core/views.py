@@ -5,6 +5,7 @@ from . import forms, models
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import PermissionDenied
+from django_email_verification import sendConfirm
 
 class RegistrationView(FormView):
     template_name = 'registration.html'
@@ -21,17 +22,18 @@ class RegistrationView(FormView):
         return '/admin/register/'
 
     def form_valid(self, form):
-        user = form.save()
-        auth = authenticate(
-            email=user.email,
-            password=user.password,
-            username=user.username,
-        )
-        if auth is not None:
-            if auth.is_active:
-                login(self.request, auth)
-            else: raise PermissionDenied
-        else: raise PermissionDenied
+        user = form.save(commit=False)
+        sendConfirm(user)
+        # auth = authenticate(
+        #     email=user.email,
+        #     password=user.password,
+        #     username=user.username,
+        # )
+        # if auth is not None:
+        #     if auth.is_active:
+        #         login(self.request, auth)
+        #     else: raise PermissionDenied
+        # else: raise PermissionDenied
         return super().form_valid(form)
 
 class StoreView(DetailView):

@@ -16,10 +16,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from core import views as core
+from django_email_verification import urls as mail_urls
 
 admin = [
     path('', admin.site.urls),
-    path('register/', core.RegistrationView.as_view())
+    path('register/', core.RegistrationView.as_view()),
+    path('email/', include(mail_urls)),
 ]
 
 urlpatterns = [
