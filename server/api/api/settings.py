@@ -89,16 +89,16 @@ DATABASES = {
 
 # Email settings
 EMAIL_ACTIVE_FIELD = 'is_active'
-EMAIL_SERVER = 'smtp.umbler.com'
+EMAIL_SERVER = ''
 EMAIL_PORT = 587
-EMAIL_ADDRESS = 'guilherme@guilhermeweb.dev'
-EMAIL_FROM_ADDRESS = 'noreply@guilhermeweb.dev'
-EMAIL_PASSWORD = 'Barbacena@mg36.com.br/' # os.environ['password_key'] suggested
+EMAIL_ADDRESS = ''
+EMAIL_FROM_ADDRESS =''
+EMAIL_PASSWORD = '' # os.environ['password_key'] suggested
 EMAIL_MAIL_SUBJECT = 'Confirm your email'
 EMAIL_MAIL_HTML = 'mail_body.html'
 EMAIL_MAIL_PLAIN = 'mail_body.txt'
 EMAIL_PAGE_TEMPLATE = 'confirm_template.html'
-EMAIL_PAGE_DOMAIN = 'http://localhost/'
+EMAIL_PAGE_DOMAIN = ''
 
 
 # Password validation
